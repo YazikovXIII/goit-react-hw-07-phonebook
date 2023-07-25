@@ -5,6 +5,10 @@ import { ContactForm } from './ContactForm/ContactForm';
 import { ContactList } from './ContactList/ContactList';
 import { Filter } from './Filter/Filter';
 import { useSelector } from 'react-redux';
+import { selectContacts, selectIsLoading, selectError } from 'redux/selectors';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { fetchContacts } from 'redux/contactSlice';
 
 export const App = () => {
   // const [contacts, setContacts] = useState([]);
@@ -52,7 +56,16 @@ export const App = () => {
   //   setContacts(updatedContacts);
   //   localStorage.setItem('contacts', JSON.stringify(updatedContacts)); // Save to local storage here
   // };
-  const contacts = useSelector(state => state.contacts);
+  const dispatch = useDispatch();
+  const isLoading = useSelector(selectIsLoading);
+  const error = useSelector(selectError);
+
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
+
+  const contacts = useSelector(selectContacts);
+
   return (
     <Wrapper>
       <Section>
@@ -63,7 +76,7 @@ export const App = () => {
         <Section>
           <h2 className="contacts__list_title">Contacts</h2>
           <Filter />
-          <ContactList />
+          {isLoading && !error ? <b>Loading...</b> : <ContactList />}
         </Section>
       )}
     </Wrapper>
