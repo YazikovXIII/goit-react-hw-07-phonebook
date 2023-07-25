@@ -120,6 +120,7 @@ export const ContactForm = () => {
       arrayOfNames.push(user.name.toLowerCase());
     });
     if (arrayOfNames.includes(name.toLowerCase())) {
+      reset();
       return alert(`${name} is already in contacts.`);
     } else {
       dispatch(addContact({ id, name, number }));
