@@ -9,6 +9,7 @@ import { selectContacts, selectIsLoading, selectError } from 'redux/selectors';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { fetchContacts } from 'redux/contactSlice';
+import { Loader } from './Loader';
 
 export const App = () => {
   // const [contacts, setContacts] = useState([]);
@@ -76,7 +77,7 @@ export const App = () => {
         <Section>
           <h2 className="contacts__list_title">Contacts</h2>
           <Filter />
-          {isLoading && !error ? <b>Loading...</b> : <ContactList />}
+          {isLoading && !error ? <Loader /> : <ContactList />}
         </Section>
       )}
     </Wrapper>
